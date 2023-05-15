@@ -6,4 +6,4 @@ world = client.get_world()
 
 #the default port is 8000 (important to assign vehcile to a tm)
 traffic_manager = client.get_trafficmanager()
-
+tm_port = traffic_manager.get_port()
