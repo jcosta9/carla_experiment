@@ -1,11 +1,22 @@
-import carla
-import random
+import sys
+import os
+import logging
 import time
+
+import carla
+
 from experimentManager import ExperimentManager
 from config import get_config
+from utils.logger import setup_logger
 
 def main():
     try:
+        os.chdir(sys.path[0])
+        setup_logger('auto_sanity')
+        
+        logging.info("Starting: Scenario 1")
+        logging.info(f"Current path: {os.getcwd()}")
+
         config = get_config('project_config')
         exp = ExperimentManager(config)
 
