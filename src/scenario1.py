@@ -11,19 +11,14 @@ def main():
             client_timeout = 2.0
             )
 
-        vehicle_bp = random.choice(exp.blueprint_library.filter('vehicle'))
-
-        transform = random.choice(exp.world.get_map().get_spawn_points())
-        vehicle = exp.world.spawn_actor(vehicle_bp, transform)
-        exp.actor_list.append(vehicle)
-        vehicle.set_autopilot(True)
-
+        
+        vehicle, _, transform = exp.add_vehicle()
         exp.spectator.set_transform(transform)
 
         camera_bp = exp.blueprint_library.find('sensor.camera.rgb')
         camera_transform = carla.Transform(carla.Location(x=1.5, z=2.4))
         camera_rgb = exp.world.spawn_actor(camera_bp, camera_transform, attach_to=vehicle)
-        camera_rgb.listen(lambda image: image.save_to_disk('../_out/%06d.png' % image.frame))
+        # camera_rgb.listen(lambda image: image.save_to_disk('../_out/%06d.png' % image.frame))
         exp.actor_list.append(camera_rgb)
         exp.sensors.append(camera_rgb)
 
@@ -36,7 +31,7 @@ def main():
         sem_transform = carla.Transform(sem_location,sem_rotation)
         sem_cam = exp.world.spawn_actor(sem_bp,sem_transform,attach_to=vehicle, attachment_type=carla.AttachmentType.Rigid)
         # This time, a color converter is applied to the image, to get the semantic segmentation view
-        sem_cam.listen(lambda image: image.save_to_disk('../tutorial/new_sem_output/%.6d.jpg' % image.frame,carla.ColorConverter.CityScapesPalette))
+        # sem_cam.listen(lambda image: image.save_to_disk('../tutorial/new_sem_output/%.6d.jpg' % image.frame,carla.ColorConverter.CityScapesPalette))
 
 
         time.sleep(20)

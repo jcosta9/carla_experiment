@@ -1,4 +1,5 @@
 import carla
+import random
 
 class ExperimentManager():
     def __init__(self, *args, **kwargs):
@@ -10,6 +11,16 @@ class ExperimentManager():
         self.blueprint_library = self.world.get_blueprint_library()
         self.actor_list = []
         self.sensors = []
+
+    def add_vehicle(self, autopilot:bool=True):
+        vehicle_bp = random.choice(self.blueprint_library.filter('vehicle'))
+        transform = random.choice(self.world.get_map().get_spawn_points())
+        vehicle = self.world.spawn_actor(vehicle_bp, transform)
+        self.actor_list.append(vehicle)
+
+        if autopilot:
+            vehicle.set_autopilot(True)
+        return vehicle, vehicle_bp, transform
 
     def tear_down(self):
         print('destroying actors')
