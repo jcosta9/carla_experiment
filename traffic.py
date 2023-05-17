@@ -52,7 +52,7 @@ def main():
 
         batch = []
         for n, transform in enumerate(vehicle_sp):
-            if n >= 30:
+            if n >= n_vehicles:
                 break
             blueprint = random.choice(vehicle_blueprints)
             if blueprint.has_attribute('color'):
