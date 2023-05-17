@@ -43,7 +43,7 @@ def main():
         # sem_cam.listen(lambda image: image.save_to_disk('../tutorial/new_sem_output/%.6d.jpg' % image.frame,carla.ColorConverter.CityScapesPalette))
 
 
-        time.sleep(20)
+        time.sleep(config.EXP_LENGTH)
 
 
     finally:
