@@ -2,14 +2,12 @@ import carla
 import random
 import time
 from experimentManager import ExperimentManager
+from config import get_config
 
 def main():
     try:
-        exp = ExperimentManager(
-            host = 'localhost', 
-            port = 2000, 
-            client_timeout = 2.0
-            )
+        config = get_config('project_config')
+        exp = ExperimentManager(config)
 
         
         vehicle, _, transform = exp.add_vehicle()

@@ -2,9 +2,9 @@ import carla
 import random
 
 class ExperimentManager():
-    def __init__(self, *args, **kwargs):
-        self.client = carla.Client(kwargs.get('host'), kwargs.get('port'))
-        self.client.set_timeout(kwargs.get('client_timeout'))
+    def __init__(self, config, *args, **kwargs):
+        self.client = carla.Client(config.HOST, config.PORT)
+        self.client.set_timeout(config.CLIENT_TIMEOUT)
 
         self.world = self.client.get_world()
         self.spectator = self.world.get_spectator()
