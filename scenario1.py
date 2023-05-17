@@ -23,7 +23,7 @@ def main():
 
     finally:
         print('destroying actors')
-        client.apply_batch([carla.command.DestroyActor(x) for x in world.get_actors()])
+        client.apply_batch([carla.command.DestroyActor(x) for x in world.get_actors().filter("vehicle")])
         print('done.')
 
 if __name__ == '__main__':
