@@ -4,15 +4,4 @@ DATA_OUTPUT: ..\data\out
 HOST : 'localhost'
 PORT : 2000
 CLIENT_TIMEOUT : 2.0
-
-
-INPUT_FILES:
-  FILE1 : file1.csv
-  FILE2 : file2.csv
-  FILE3 : file3.csv
-
-FINAL_COLUMNS:
-  - index 
-  - col1
-  - col2
-  - col3
+EXP_LENGTH: 20 #seconds
