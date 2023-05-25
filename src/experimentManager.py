@@ -18,6 +18,7 @@ class ExperimentManager():
         self.sensors = []
         self.spawn_points = self.world.get_map().get_spawn_points()
         random.shuffle(self.spawn_points)
+        self.sensor_list = []
 
     def add_vehicle(self, autopilot:bool=True):
         vehicle_bp = random.choice(self.blueprint_library.filter('vehicle'))
@@ -30,6 +31,23 @@ class ExperimentManager():
         if autopilot:
             vehicle.set_autopilot(True)
         return vehicle, vehicle_bp, transform
+    
+    def add_sensor(self, ego_vehicle : carla.Actor, sensor: str) -> list:
+        try:
+            sensor_bp = self.blueprint_library.find(sensor)
+        except IndexError:
+            print(f'{sensor} was not found in the blueprint library')
+            return
+        if sensor_bp.has_attribute('image_size_x') and sensor_bp.has_attribute('image_size_y'):
+            sensor_bp.set_attribute("image_size_x",str(1920))
+            sensor_bp.set_attribute("image_size_y",str(1080))
+            sensor_bp.set_attribute("fov",str(105))
+        #the relative position to the ego vehicle could be quite crucial depending on type of vehicle
+        transform = carla.Transform(carla.Location(x=2,z=1))
+        sensor = self.world.spawn_actor(sensor_bp, transform, attach_to=ego_vehicle, attachment_type=carla.AttachmentType.Rigid)
+        self.actor_list.append(sensor)
+        return sensor
+    
     
     def add_pedestrian(self):
         #spawning the walker

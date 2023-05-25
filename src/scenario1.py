@@ -22,7 +22,7 @@ def main():
 
         
         vehicle, _, transform = exp.add_vehicle()
-        walker, _, transform = exp.add_pedestrian()
+        #walker, _, transform = exp.add_pedestrian()
         exp.spectator.set_transform(transform)
 
         camera_bp = exp.blueprint_library.find('sensor.camera.rgb')
@@ -32,14 +32,7 @@ def main():
         exp.actor_list.append(camera_rgb)
         exp.sensors.append(camera_rgb)
 
-        sem_bp = exp.world.get_blueprint_library().find('sensor.camera.semantic_segmentation')
-        sem_bp.set_attribute("image_size_x",str(1920))
-        sem_bp.set_attribute("image_size_y",str(1080))
-        sem_bp.set_attribute("fov",str(105))
-        sem_location = carla.Location(2,0,1)
-        sem_rotation = carla.Rotation(0,0,0)
-        sem_transform = carla.Transform(sem_location,sem_rotation)
-        sem_cam = exp.world.spawn_actor(sem_bp,sem_transform,attach_to=vehicle, attachment_type=carla.AttachmentType.Rigid)
+        sem_cam = exp.add_sensor(vehicle, 'sensor.camera.semantic_segmentation')
         # This time, a color converter is applied to the image, to get the semantic segmentation view
         # sem_cam.listen(lambda image: image.save_to_disk('../tutorial/new_sem_output/%.6d.jpg' % image.frame,carla.ColorConverter.CityScapesPalette))
 
