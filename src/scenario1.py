@@ -39,6 +39,8 @@ def main():
         sem_rotation = carla.Rotation(0,0,0)
         sem_transform = carla.Transform(sem_location,sem_rotation)
         sem_cam = exp.world.spawn_actor(sem_bp,sem_transform,attach_to=vehicle, attachment_type=carla.AttachmentType.Rigid)
+        exp.actor_list.append(sem_cam)
+        exp.sensors.append(sem_cam)
         # This time, a color converter is applied to the image, to get the semantic segmentation view
         # sem_cam.listen(lambda image: image.save_to_disk('../tutorial/new_sem_output/%.6d.jpg' % image.frame,carla.ColorConverter.CityScapesPalette))
 
