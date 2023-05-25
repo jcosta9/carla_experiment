@@ -1,0 +1,5 @@
+personal_testing.py
+files/log
+src/__pycache__
+src/utils
+src/config/__pycache__

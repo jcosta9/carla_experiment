@@ -22,6 +22,9 @@ def main():
 
         
         vehicle, _, transform = exp.add_vehicle()
+        #walker, _, transform = exp.add_pedestrian()
+        actors, spawnpoints = exp.add_walkers(1)
+        transform = spawnpoints[0]
         exp.spectator.set_transform(transform)
 
         camera_bp = exp.blueprint_library.find('sensor.camera.rgb')
