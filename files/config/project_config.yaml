@@ -1,5 +1,5 @@
-DATA_PATH: ..\data
-DATA_OUTPUT: ..\data\out
+DATA_PATH: ["..","data"]
+DATA_OUTPUT: ["..", "data", "out"]
 
 HOST : 'localhost'
 PORT : 2000
