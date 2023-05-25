@@ -5,7 +5,7 @@ import time
 
 import carla
 
-from experimentManager import ExperimentManager
+from experimentManager import ExperimentManager, get_image_contents
 from config import get_config
 from utils.logger import setup_logger
 
@@ -41,8 +41,7 @@ def main():
         sem_cam = exp.world.spawn_actor(sem_bp,sem_transform,attach_to=vehicle, attachment_type=carla.AttachmentType.Rigid)
         exp.actor_list.append(sem_cam)
         exp.sensors.append(sem_cam)
-        # This time, a color converter is applied to the image, to get the semantic segmentation view
-        # sem_cam.listen(lambda image: image.save_to_disk('../tutorial/new_sem_output/%.6d.jpg' % image.frame,carla.ColorConverter.CityScapesPalette))
+        sem_cam.listen(lambda image: get_image_contents(image, config))
 
 
         time.sleep(config.EXP_LENGTH)
