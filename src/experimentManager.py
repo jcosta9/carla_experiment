@@ -32,21 +32,24 @@ class ExperimentManager():
             vehicle.set_autopilot(True)
         return vehicle, vehicle_bp, transform
     
-    def add_sensor(self, ego_vehicle : carla.Actor, sensor: str) -> list:
+    def add_sensor(self, ego_vehicle : carla.Actor, sensor: str, *args,**kwargs) -> list:
         try:
             sensor_bp = self.blueprint_library.find(sensor)
         except IndexError:
             print(f'{sensor} was not found in the blueprint library')
             return
-        if sensor_bp.has_attribute('image_size_x') and sensor_bp.has_attribute('image_size_y'):
-            sensor_bp.set_attribute("image_size_x",str(1920))
-            sensor_bp.set_attribute("image_size_y",str(1080))
-            sensor_bp.set_attribute("fov",str(105))
+        if kwargs != None:
+            for key in kwargs:
+                sensor_bp.set_attribute(f'{key}',str(kwargs[key]))
         #the relative position to the ego vehicle could be quite crucial depending on type of vehicle
         transform = carla.Transform(carla.Location(x=2,z=1))
         sensor = self.world.spawn_actor(sensor_bp, transform, attach_to=ego_vehicle, attachment_type=carla.AttachmentType.Rigid)
         self.actor_list.append(sensor)
         return sensor
+    
+    def listen_to_sensor(self,sensor: carla.Sensor):
+        sensor_type = sensor.type_id.replace('sensor.', '')
+        sensor.listen(lambda image: image.save_to_disk(f'../_out/{sensor_type}/%06d.png' % image.frame))
     
     
     def add_pedestrian(self):
